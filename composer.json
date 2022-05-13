@@ -8,11 +8,21 @@
             "Lune\\": "src/Lune"
         }
     },
+    "scripts": {
+        "tests": "phpunit --color=always --testdox -v tests/"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lune\\Tests\\": "tests"
+        }
+    },
     "authors": [
         {
             "name": "Antonio Sarosi",
             "email": "sarosiantonio@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
 }
