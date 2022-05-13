@@ -1,0 +1,18 @@
+{
+    "name": "antoniosarosi/lune-framework-course",
+    "description": "Simple PHP framework inspired by Laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lune\\": "src/Lune"
+        }
+    },
+    "authors": [
+        {
+            "name": "Antonio Sarosi",
+            "email": "sarosiantonio@gmail.com"
+        }
+    ],
+    "require": {}
+}

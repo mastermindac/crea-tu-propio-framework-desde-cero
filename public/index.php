@@ -1,6 +1,9 @@
 <?php
 
-require "./Router.php";
+require_once "../vendor/autoload.php";
+
+use Lune\HttpNotFoundException;
+use Lune\Router;
 
 $router = new Router();
 
