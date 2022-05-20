@@ -2,6 +2,9 @@
 
 namespace Lune\Http;
 
+/**
+ * HTTP verb.
+ */
 enum HttpMethod: string {
     case GET = "GET";
     case POST = "POST";

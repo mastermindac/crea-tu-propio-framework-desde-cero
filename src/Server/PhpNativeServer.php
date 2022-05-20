@@ -5,23 +5,41 @@ namespace Lune\Server;
 use Lune\Http\HttpMethod;
 use Lune\Http\Response;
 
+/**
+ * PHP native server that uses `$_SERVER` global.
+ */
 class PhpNativeServer implements Server {
+    /**
+     * @inheritDoc
+     */
     public function requestUri(): string {
         return parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function requestMethod(): HttpMethod {
         return HttpMethod::from($_SERVER["REQUEST_METHOD"]);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function postData(): array {
         return $_POST;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function queryParams(): array {
         return $_GET;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function sendResponse(Response $response) {
         // PHP sends Content-Type header by default, but it has to be removed if
         // the response has not content. Content-Type header can't be removed
