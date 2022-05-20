@@ -1,8 +1,11 @@
 <?php
 
-namespace Lune;
+namespace Lune\Routing;
 
 use Closure;
+use Lune\Http\HttpMethod;
+use Lune\Http\HttpNotFoundException;
+use Lune\Http\Request;
 
 class Router {
     protected array $routes = [];

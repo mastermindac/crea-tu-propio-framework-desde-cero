@@ -1,6 +1,6 @@
 <?php
 
-namespace Lune;
+namespace Lune\Http;
 
 class HttpNotFoundException extends \Exception {
     //

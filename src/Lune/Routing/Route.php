@@ -1,6 +1,6 @@
 <?php
 
-namespace Lune;
+namespace Lune\Routing;
 
 class Route {
     protected string $uri;

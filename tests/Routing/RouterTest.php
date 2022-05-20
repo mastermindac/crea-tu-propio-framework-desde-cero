@@ -2,10 +2,10 @@
 
 namespace Lune\Tests;
 
-use Lune\HttpMethod;
-use Lune\Request;
-use Lune\Router;
-use Lune\Server;
+use Lune\Http\HttpMethod;
+use Lune\Http\Request;
+use Lune\Routing\Router;
+use Lune\Server\Server;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase {

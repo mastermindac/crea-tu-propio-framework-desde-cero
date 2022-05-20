@@ -1,12 +1,11 @@
 <?php
 
-require_once "../vendor/autoload.php";
+use Lune\Http\HttpNotFoundException;
+use Lune\Http\Request;
+use Lune\Routing\Router;
+use Lune\Server\PhpNativeServer;
 
-use Lune\HttpNotFoundException;
-use Lune\PhpNativeServer;
-use Lune\Request;
-use Lune\Router;
-use Lune\Server;
+require_once "../vendor/autoload.php";
 
 $router = new Router();
 

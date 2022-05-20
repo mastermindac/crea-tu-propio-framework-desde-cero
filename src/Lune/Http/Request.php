@@ -1,6 +1,8 @@
 <?php
 
-namespace Lune;
+namespace Lune\Http;
+
+use Lune\Server\Server;
 
 class Request {
     protected string $uri;
