@@ -3,6 +3,7 @@
 namespace Lune\Tests;
 
 use Lune\HttpMethod;
+use Lune\Request;
 use Lune\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ class RouterTest extends TestCase {
         $router = new Router();
         $router->get($uri, $action);
 
-        $route = $router->resolve($uri, HttpMethod::GET->value);
+        $route = $router->resolve(new Request(new MockServer($uri, HttpMethod::GET)));
         $this->assertEquals($uri, $route->uri());
         $this->assertEquals($action, $route->action());
     }
@@ -33,7 +34,7 @@ class RouterTest extends TestCase {
         }
 
         foreach ($routes as $uri => $action) {
-            $route = $router->resolve($uri, HttpMethod::GET->value);
+            $route = $router->resolve(new Request(new MockServer($uri, HttpMethod::GET)));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }
@@ -61,7 +62,7 @@ class RouterTest extends TestCase {
         }
 
         foreach ($routes as [$method, $uri, $action]) {
-            $route = $router->resolve($uri, $method->value);
+            $route = $router->resolve(new Request(new MockServer($uri, $method)));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }
