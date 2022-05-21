@@ -7,7 +7,7 @@ namespace Lune\Routing;
  */
 class Route {
     /**
-     * URI defined in the format `"/route/{param}"`. 
+     * URI defined in the format `"/route/{param}"`.
      *
      * @var string
      */

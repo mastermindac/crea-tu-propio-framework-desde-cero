@@ -1,6 +1,6 @@
 <?php
 
-namespace Lune\Tests;
+namespace Lune\Tests\Routing;
 
 use Lune\Routing\Route;
 use PHPUnit\Framework\TestCase;
