@@ -13,13 +13,11 @@ class RequestTest extends TestCase {
         $queryParams = ['a' => 1, 'b' => 2, 'test' => 'foo'];
         $postData = ['post' => 'test', 'foo' => 'bar'];
 
-        $server = $this->getMockBuilder(Server::class)->getMock();
-        $server->method("requestUri")->willReturn($uri);
-        $server->method("requestMethod")->willReturn(HttpMethod::POST);
-        $server->method("queryParams")->willReturn($queryParams);
-        $server->method("postData")->willReturn($postData);
-
-        $request = new Request($server);
+        $request = (new Request())
+            ->setUri($uri)
+            ->setMethod(HttpMethod::POST)
+            ->setQueryParameters($queryParams)
+            ->setPostData($postData);
 
         $this->assertEquals($uri, $request->uri());
         $this->assertEquals($queryParams, $request->query());
