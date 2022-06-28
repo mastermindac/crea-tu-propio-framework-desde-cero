@@ -52,8 +52,12 @@ class Response {
      *
      * @return array<string, string>
      */
-    public function headers(): array {
-        return $this->headers;
+    public function headers(string $key = null): array|string|null {
+        if (is_null($key)) {
+            return $this->headers;
+        }
+
+        return $this->headers[strtolower($key)] ?? null;
     }
 
     /**
