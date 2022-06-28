@@ -20,7 +20,7 @@ class RouterTest extends TestCase {
         $router = new Router();
         $router->get($uri, $action);
 
-        $route = $router->resolve($this->createMockRequest($uri, HttpMethod::GET));
+        $route = $router->resolveRoute($this->createMockRequest($uri, HttpMethod::GET));
         $this->assertEquals($uri, $route->uri());
         $this->assertEquals($action, $route->action());
     }
@@ -40,7 +40,7 @@ class RouterTest extends TestCase {
         }
 
         foreach ($routes as $uri => $action) {
-            $route = $router->resolve($this->createMockRequest($uri, HttpMethod::GET));
+            $route = $router->resolveRoute($this->createMockRequest($uri, HttpMethod::GET));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }
@@ -68,7 +68,7 @@ class RouterTest extends TestCase {
         }
 
         foreach ($routes as [$method, $uri, $action]) {
-            $route = $router->resolve($this->createMockRequest($uri, $method));
+            $route = $router->resolveRoute($this->createMockRequest($uri, $method));
             $this->assertEquals($uri, $route->uri());
             $this->assertEquals($action, $route->action());
         }
