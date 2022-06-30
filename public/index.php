@@ -11,21 +11,21 @@ require_once "../vendor/autoload.php";
 $app = App::bootstrap();
 
 $app->router->get('/test/{param}', function (Request $request) {
-    return Response::json($request->routeParameters());
+    return json($request->routeParameters());
 });
 
 $app->router->post('/test', function (Request $request) {
-    return Response::json($request->data());
+    return json($request->data());
 });
 
 $app->router->get('/redirect', function (Request $request) {
-    return Response::redirect("/test");
+    return redirect("/test");
 });
 
 class AuthMiddleware implements Middleware {
     public function handle(Request $request, Closure $next): Response {
         if ($request->headers('Authorization') != 'test') {
-            return Response::json(["message" => "Not authenticated"])->setStatus(401);
+            return json(["message" => "Not authenticated"])->setStatus(401);
         }
 
         $response = $next($request);
@@ -35,11 +35,9 @@ class AuthMiddleware implements Middleware {
     }
 }
 
-Route::get('/middlewares', fn (Request $request) => Response::json(["message" => "ok"]))
+Route::get('/middlewares', fn (Request $request) => json(["message" => "ok"]))
     ->setMiddlewares([AuthMiddleware::class]);
 
-Route::get('/html', fn (Request $request) => Response::view('home', [
-    'user' => 'Manolo'
-]));
+Route::get('/html', fn (Request $request) => view('home', ['user' => 'Manolo']));
 
 $app->run();

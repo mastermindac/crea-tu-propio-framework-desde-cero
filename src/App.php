@@ -2,7 +2,6 @@
 
 namespace Lune;
 
-use Lune\Container\Container;
 use Lune\Http\HttpNotFoundException;
 use Lune\Http\Request;
 use Lune\Http\Response;
@@ -22,7 +21,7 @@ class App {
     public View $view;
 
     public static function bootstrap() {
-        $app = Container::singleton(self::class);
+        $app = singleton(self::class);
         $app->router = new Router();
         $app->server = new PhpNativeServer();
         $app->request = $app->server->getRequest();

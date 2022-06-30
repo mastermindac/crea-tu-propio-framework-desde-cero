@@ -6,7 +6,11 @@
     "autoload": {
         "psr-4": {
             "Lune\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/app.php",
+            "src/Helpers/http.php"
+        ]
     },
     "scripts": {
         "tests": "phpunit --color=always --testdox -v tests/",
