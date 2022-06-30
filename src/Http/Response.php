@@ -166,8 +166,8 @@ class Response {
             ->setHeader("Location", $uri);
     }
 
-    public static function view(string $view): self {
-        $content = Container::resolve(App::class)->view->render($view);
+    public static function view(string $view, array $params = [], string $layout = null): self {
+        $content = Container::resolve(App::class)->view->render($view, $params, $layout);
 
         return (new self())
             ->setContentType("text/html")
