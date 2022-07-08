@@ -20,6 +20,9 @@ class Validator {
             }
             $fieldUnderValidationErrors = [];
             foreach ($rules as $rule) {
+                if (is_string($rule)) {
+                    $rule = Rule::from($rule);
+                }
                 if (!$rule->isValid($field, $this->data)) {
                     $message = $messages[$field][$rule::class] ?? $rule->message();
                     $fieldUnderValidationErrors[$rule::class] = $message;
