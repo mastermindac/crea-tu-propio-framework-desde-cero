@@ -5,6 +5,8 @@ use Lune\Http\Middleware;
 use Lune\Http\Request;
 use Lune\Http\Response;
 use Lune\Routing\Route;
+use Lune\Validation\Rule;
+use Lune\Validation\Rules\Required;
 
 require_once "../vendor/autoload.php";
 
@@ -39,5 +41,15 @@ Route::get('/middlewares', fn (Request $request) => json(["message" => "ok"]))
     ->setMiddlewares([AuthMiddleware::class]);
 
 Route::get('/html', fn (Request $request) => view('home', ['user' => 'Manolo']));
+
+Route::post('/validate', fn (Request $request) => json($request->validate([
+    'test' => Rule::required(),
+    'num' => Rule::number(),
+    'email' => [Rule::required(), Rule::email()]
+], [
+    'email' => [
+        Required::class => 'DAME EL CAMPO'
+    ]
+])));
 
 $app->run();

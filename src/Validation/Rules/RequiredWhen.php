@@ -2,8 +2,6 @@
 
 namespace Lune\Validation\Rules;
 
-use Lune\Validation\Exceptions\RuleParseException;
-
 class RequiredWhen implements ValidationRule {
     /**
      * Instantiate required when rule.

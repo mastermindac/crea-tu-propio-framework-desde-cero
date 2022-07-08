@@ -3,8 +3,6 @@
 namespace Lune\Routing;
 
 use Closure;
-use Lune\App;
-use Lune\Container\Container;
 
 /**
  * This class stores the URI regex and action.
@@ -129,5 +127,9 @@ class Route {
 
     public static function get(string $uri, Closure $action): Route {
         return app()->router->get($uri, $action);
+    }
+
+    public static function post(string $uri, Closure $action): Route {
+        return app()->router->post($uri, $action);
     }
 }
