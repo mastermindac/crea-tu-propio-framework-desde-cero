@@ -13,6 +13,10 @@ use Lune\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 
 class ValidatorTest extends TestCase {
+    protected function setUp(): void {
+        Rule::loadDefaultRules();
+    }
+
     public function test_basic_validation_passes() {
         $data = [
             "email" => "test@test.com",
@@ -61,5 +65,33 @@ class ValidatorTest extends TestCase {
         $v = new Validator($data);
 
         $this->assertEquals($expected, $v->validate($rules));
+    }
+
+    public function test_overrides_error_messages_correctly() {
+        $data = ["email" => "test@", "num1" => "not a number"];
+
+        $rules = [
+            "email" => "email",
+            "num1" => "number",
+            "num2" =>  ["required", "number"],
+        ];
+
+        $messages = [
+            "email" => ["email" => "test email message"],
+            "num1" => ["number" => "test number message"],
+            "num2" =>  [
+                "required" => "test required message",
+                "number" => "test number message again"
+            ]
+        ];
+
+        $v = new Validator($data);
+
+        try {
+            $v->validate($rules, $messages);
+            $this->fail("Did not throw ValidationException");
+        } catch (ValidationException $e) {
+            $this->assertEquals($messages, $e->errors());
+        }
     }
 }
