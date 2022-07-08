@@ -43,12 +43,12 @@ Route::get('/middlewares', fn (Request $request) => json(["message" => "ok"]))
 Route::get('/html', fn (Request $request) => view('home', ['user' => 'Manolo']));
 
 Route::post('/validate', fn (Request $request) => json($request->validate([
-    'test' => Rule::required(),
-    'num' => Rule::number(),
-    'email' => ['required', 'email']
+    'test' => 'required',
+    'num' => 'number',
+    'email' => ['required_with:num', 'email']
 ], [
     'email' => [
-        Required::class => 'DAME EL CAMPO'
+        'email' => 'DAME EL CAMPO'
     ]
 ])));
 
