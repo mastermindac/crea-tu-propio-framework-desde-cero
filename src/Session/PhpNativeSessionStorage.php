@@ -9,6 +9,10 @@ class PhpNativeSessionStorage implements SessionStorage {
         }
     }
 
+    public function save() {
+        session_write_close();
+    }
+
     public function id(): string {
         return session_id();
     }
