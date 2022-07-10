@@ -11,6 +11,10 @@ function redirect(string $uri): Response {
     return Response::redirect($uri);
 }
 
+function back(): Response {
+    return redirect(session()->get('_previous', '/'));
+}
+
 function view(string $view, array $params = [], string $layout = null): Response {
     return Response::view($view, $params, $layout);
 }
