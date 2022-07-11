@@ -1,6 +1,7 @@
 <?php
 
 use Lune\App;
+use Lune\Database\DB;
 use Lune\Http\Middleware;
 use Lune\Http\Request;
 use Lune\Http\Response;
@@ -61,6 +62,15 @@ Route::get('/form', fn (Request $request) => view('form'));
 
 Route::post('/form', function (Request $request) {
     return json($request->validate(['email' => 'email', 'name' => 'required']));
+});
+
+Route::post('/user', function (Request $request) {
+    DB::statement("INSERT INTO users (name, email) VALUES (?, ?)", [$request->data('name'), $request->data('email')]);
+    return json(["message" => "ok"]);
+});
+
+Route::get('/users', function (Request $request) {
+    return json(DB::statement("SELECT * FROM users"));
 });
 
 $app->run();
