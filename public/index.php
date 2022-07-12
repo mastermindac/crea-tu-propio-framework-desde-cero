@@ -2,6 +2,7 @@
 
 use Lune\App;
 use Lune\Database\DB;
+use Lune\Database\Model;
 use Lune\Http\Middleware;
 use Lune\Http\Request;
 use Lune\Http\Response;
@@ -71,6 +72,19 @@ Route::post('/user', function (Request $request) {
 
 Route::get('/users', function (Request $request) {
     return json(DB::statement("SELECT * FROM users"));
+});
+
+class User extends Model {
+
+}
+
+Route::post('/user/model', function (Request $request) {
+    $user = new User();
+    $user->name = $request->data('name');
+    $user->email = $request->data('email');
+    $user->save();
+
+    return json(["message" => "ok"]);
 });
 
 $app->run();

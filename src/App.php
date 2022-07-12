@@ -4,6 +4,7 @@ namespace Lune;
 
 use Lune\Database\Drivers\DatabaseDriver;
 use Lune\Database\Drivers\PdoDriver;
+use Lune\Database\Model;
 use Lune\Http\HttpMethod;
 use Lune\Http\HttpNotFoundException;
 use Lune\Http\Request;
@@ -41,6 +42,7 @@ class App {
         $app->session = new Session(new PhpNativeSessionStorage());
         $app->database = new PdoDriver();
         $app->database->connect('mysql', 'localhost', 3306, 'curso_framework', 'root', '');
+        Model::setDatabaseDriver($app->database);
         Rule::loadDefaultRules();
 
         return $app;
