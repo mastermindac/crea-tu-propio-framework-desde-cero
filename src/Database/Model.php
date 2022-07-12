@@ -145,7 +145,7 @@ abstract class Model {
 
         $models = [$model->setAttributes($rows[0])];
 
-        for ($i = 0; $i < count($rows); $i++) {
+        for ($i = 1; $i < count($rows); $i++) {
             $models[] = (new static())->setAttributes($rows[$i]);
         }
 
@@ -165,7 +165,7 @@ abstract class Model {
 
         $models = [$model->setAttributes($rows[0])];
 
-        for ($i = 0; $i < count($rows); $i++) {
+        for ($i = 1; $i < count($rows); $i++) {
             $models[] = (new static())->setAttributes($rows[$i]);
         }
 
