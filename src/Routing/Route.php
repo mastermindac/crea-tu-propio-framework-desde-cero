@@ -132,4 +132,12 @@ class Route {
     public static function post(string $uri, Closure $action): Route {
         return app()->router->post($uri, $action);
     }
+
+    public static function put(string $uri, Closure $action): Route {
+        return app()->router->put($uri, $action);
+    }
+
+    public static function delete(string $uri, Closure $action): Route {
+        return app()->router->delete($uri, $action);
+    }
 }
