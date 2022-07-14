@@ -5,6 +5,7 @@ namespace Lune\Tests\Database;
 use Lune\Database\Drivers\DatabaseDriver;
 use Lune\Database\Drivers\PdoDriver;
 use Lune\Database\Migrations\Migrator;
+use PDOException;
 use PHPUnit\Framework\TestCase;
 
 class MigrationsTest extends TestCase {
@@ -29,7 +30,8 @@ class MigrationsTest extends TestCase {
         $this->migrator = new Migrator(
             $this->migrationsDirectory,
             $this->templatesDirectory,
-            $this->driver
+            $this->driver,
+            false,
         );
     }
 
@@ -66,5 +68,32 @@ class MigrationsTest extends TestCase {
 
         $this->assertFileExists($file);
         $this->assertFileEquals($expectedMigrationFile, $file);
+    }
+
+    /**
+     * @depends test_creates_migration_files
+     */
+    public function test_migrate_files() {
+        $tables = ["users", "products", "sellers"];
+        $migrated = [];
+
+        foreach ($tables as $table) {
+            $migrated[] = $this->migrator->make("create_{$table}_table");
+        }
+
+        $this->migrator->migrate();
+
+        $rows = $this->driver->statement("SELECT * FROM migrations");
+
+        $this->assertEquals(3, count($rows));
+        $this->assertEquals($migrated, array_column($rows, "name"));
+
+        foreach ($tables as $table) {
+            try {
+                $this->driver->statement("SELECT * FROM $table");
+            } catch (PDOException $e) {
+                $this->fail("Failed accessing migrated table $table: {$e->getMessage()}");
+            }
+        }
     }
 }

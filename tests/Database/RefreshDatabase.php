@@ -2,6 +2,7 @@
 
 namespace Lune\Tests\Database;
 
+use Lune\Database\Drivers\DatabaseDriver;
 use Lune\Database\Drivers\PdoDriver;
 use Lune\Database\Model;
 use PDOException;
@@ -9,7 +10,7 @@ use PDOException;
 trait RefreshDatabase {
     protected function setUp(): void {
         if (is_null($this->driver)) {
-            $this->driver = new PdoDriver();
+            $this->driver = singleton(DatabaseDriver::class, PdoDriver::class);
             Model::setDatabaseDriver($this->driver);
             try {
                 $this->driver->connect('mysql', 'localhost', 3306, 'curso_framework_tests', 'root', '');
