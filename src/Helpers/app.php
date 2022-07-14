@@ -7,6 +7,6 @@ function app(string $class = App::class) {
     return Container::resolve($class);
 }
 
-function singleton(string $class) {
-    return Container::singleton($class);
+function singleton(string $class, string|callable|null $build) {
+    return Container::singleton($class, $build);
 }
