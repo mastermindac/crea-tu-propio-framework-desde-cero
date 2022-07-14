@@ -96,4 +96,51 @@ class MigrationsTest extends TestCase {
             }
         }
     }
+
+    /**
+     * @depends test_creates_migration_files
+     */
+    public function test_rollback_files() {
+        $tables = ["users", "products", "sellers", "providers", "referals"];
+        $migrated = [];
+        foreach ($tables as $table) {
+            $migrated[] = $this->migrator->make("create_{$table}_table");
+        }
+
+        $this->migrator->migrate();
+
+        // Rollback last migration
+        $this->migrator->rollback(1);
+        $rows = $this->driver->statement("SELECT * FROM migrations");
+        $this->assertEquals(4, count($rows));
+        $this->assertEquals(array_slice($migrated, 0, 4), array_column($rows, "name"));
+
+        try {
+            $table = $table[count($tables) - 1];
+            $this->driver->statement("SELECT * FROM $table");
+            $this->fail("Table $table was not deleted after rolling back");
+        } catch (PDOException $e) {
+            // OK
+        }
+
+        // Rollback another 2 migrationss
+        $this->migrator->rollback(2);
+        $rows = $this->driver->statement("SELECT * FROM migrations");
+        $this->assertEquals(2, count($rows));
+        $this->assertEquals(array_slice($migrated, 0, 2), array_column($rows, "name"));
+
+        foreach (array_slice($tables, 2, 2) as $table) {
+            try {
+                $this->driver->statement("SELECT * FROM $table");
+                $this->fail("Table '$table' was not deleted after rolling back");
+            } catch (PDOException $e) {
+                // OK
+            }
+        }
+
+        // Rollback remaining
+        $this->migrator->rollback();
+        $rows = $this->driver->statement("SELECT * FROM migrations");
+        $this->assertEquals(0, count($rows));
+    }
 }
