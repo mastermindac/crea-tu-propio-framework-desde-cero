@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Lune\\": "src/"
+            "Lune\\": "src/",
+            "App\\": "app/"
         },
         "files": [
             "src/Helpers/app.php",
