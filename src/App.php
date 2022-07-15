@@ -46,7 +46,7 @@ class App {
     }
 
     protected function loadConfig(): self {
-        Dotenv::createImmutable(self::$root);
+        Dotenv::createImmutable(self::$root)->load();
         Config::load(self::$root . "/config");
 
         return $this;
