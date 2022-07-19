@@ -38,6 +38,14 @@ abstract class Model {
         return $this->attributes[$name] ?? null;
     }
 
+    public function __sleep() {
+        foreach ($this->hidden as $hide) {
+            unset($this->attributes[$hide]);
+        }
+
+        return array_keys(get_object_vars($this));
+    }
+
     protected function setAttributes(array $attributes): static {
         foreach ($attributes as $key => $value) {
             $this->__set($key, $value);

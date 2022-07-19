@@ -10,6 +10,7 @@ return new class() implements Migration {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(256),
                 email VARCHAR(256),
+                password VARCHAR(256),
                 created_at DATETIME,
                 updated_at DATETIME NULL
             )
