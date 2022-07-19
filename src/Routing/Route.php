@@ -125,6 +125,12 @@ class Route {
         return array_combine($this->parameters, array_slice($arguments, 1));
     }
 
+    public static function load(string $routesDirectory) {
+        foreach (glob("$routesDirectory/*.php") as $routes) {
+            require_once $routes;
+        }
+    }
+
     public static function get(string $uri, Closure $action): Route {
         return app()->router->get($uri, $action);
     }

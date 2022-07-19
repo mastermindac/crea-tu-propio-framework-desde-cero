@@ -9,6 +9,7 @@ return [
     ],
 
     'runtime' => [
-
+        App\Providers\RuleServiceProvider::class,
+        App\Providers\RouteServiceProvider::class
     ]
 ];
