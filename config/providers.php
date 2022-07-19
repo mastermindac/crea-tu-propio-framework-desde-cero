@@ -7,6 +7,7 @@ return [
         Lune\Providers\SessionStorageServiceProvider::class,
         Lune\Providers\ViewServiceProvider::class,
         Lune\Providers\AuthenticatorServiceProvider::class,
+        Lune\Providers\HasherServiceProvider::class,
     ],
 
     'runtime' => [

@@ -12,7 +12,8 @@
             "src/Helpers/app.php",
             "src/Helpers/http.php",
             "src/Helpers/string.php",
-            "src/Helpers/session.php"
+            "src/Helpers/session.php",
+            "src/Helpers/auth.php"
         ]
     },
     "scripts": {
