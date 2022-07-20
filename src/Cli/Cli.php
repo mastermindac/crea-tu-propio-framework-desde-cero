@@ -4,9 +4,12 @@ namespace Lune\Cli;
 
 use Dotenv\Dotenv;
 use Lune\App;
+use Lune\Cli\Commands\MakeController;
 use Lune\Cli\Commands\MakeMigration;
+use Lune\Cli\Commands\MakeModel;
 use Lune\Cli\Commands\Migrate;
 use Lune\Cli\Commands\MigrateRollback;
+use Lune\Cli\Commands\Serve;
 use Lune\Config\Config;
 use Lune\Database\Drivers\DatabaseDriver;
 use Lune\Database\Migrations\Migrator;
@@ -49,7 +52,10 @@ class Cli {
         $cli->addCommands([
             new MakeMigration(),
             new Migrate(),
-            new MigrateRollback()
+            new MigrateRollback(),
+            new MakeModel(),
+            new MakeController(),
+            new Serve(),
         ]);
 
         $cli->run();
