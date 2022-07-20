@@ -3,8 +3,11 @@
 namespace Lune\Database\Migrations;
 
 use Lune\Database\Drivers\DatabaseDriver;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Migrator {
+    private ConsoleOutput $output;
+
     public function __construct(
         private string $migrationsDirectory,
         private string $templatesDirectory,
@@ -14,11 +17,12 @@ class Migrator {
         $this->migrationsDirectory = $migrationsDirectory;
         $this->templatesDirectory = $templatesDirectory;
         $this->driver = $driver;
+        $this->output = new ConsoleOutput();
     }
 
     private function log(string $message) {
         if ($this->logProgress) {
-            print($message . PHP_EOL);
+            $this->output->writeln("<info>$message</info>");
         }
     }
 
@@ -32,7 +36,7 @@ class Migrator {
         $migrations = glob("$this->migrationsDirectory/*.php");
 
         if (count($migrated) >= count($migrations)) {
-            $this->log("Nothing to migrate");
+            $this->log("<comment>Nothing to migrate</comment>");
             return;
         }
 
@@ -41,7 +45,7 @@ class Migrator {
             $migration->up();
             $name = basename($file);
             $this->driver->statement("INSERT INTO migrations (name) VALUES (?)", [$name]);
-            $this->log("Migrated => $name");
+            $this->log("<info>Migrated => $name</info>");
         }
     }
 
@@ -102,6 +106,8 @@ class Migrator {
         $fileName = sprintf("%s_%06d_%s.php", $date, $id, $migrationName);
 
         file_put_contents("$this->migrationsDirectory/$fileName", $template);
+
+        $this->log("Created migrations => $fileName");
 
         return $fileName;
     }
