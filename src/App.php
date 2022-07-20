@@ -64,7 +64,7 @@ class App {
     public function setHttpHandlers(): self {
         $this->router = singleton(Router::class);
         $this->server = app(Server::class);
-        $this->request = $this->server->getRequest();
+        $this->request = singleton(Request::class, fn () => $this->server->getRequest());
         $this->session = singleton(Session::class, fn () => new Session(app(SessionStorage::class)));
 
         return $this;

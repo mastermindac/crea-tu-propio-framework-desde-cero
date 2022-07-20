@@ -3,6 +3,7 @@
 namespace Lune\Routing;
 
 use Closure;
+use Lune\Container\DependencyInjection;
 use Lune\Http\HttpMethod;
 use Lune\Http\HttpNotFoundException;
 use Lune\Http\Request;
@@ -55,10 +56,12 @@ class Router {
             $action[0] = $controller;
         }
 
+        $params = DependencyInjection::resolveParameters($action, $request->routeParameters());
+
         return $this->runMiddlewares(
             $request,
             $route->middlewares(),
-            fn () => call_user_func($action, $request)
+            fn () => call_user_func($action, ...$params)
         );
     }
 
