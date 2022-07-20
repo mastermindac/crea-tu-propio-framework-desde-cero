@@ -12,6 +12,8 @@ interface DatabaseDriver {
         string $password
     );
 
+    public function lastInsertId();
+
     public function close();
 
     public function statement(string $query, array $bind = []): mixed;

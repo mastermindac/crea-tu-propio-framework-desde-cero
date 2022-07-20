@@ -24,6 +24,10 @@ class PdoDriver implements DatabaseDriver {
         $this->pdo = null;
     }
 
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
+    }
+
     public function statement(string $query, array $bind = []): mixed {
         $statement = $this->pdo->prepare($query);
         $statement->execute($bind);

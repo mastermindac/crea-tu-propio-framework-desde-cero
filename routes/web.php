@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Auth\RegisterController;
 use App\Models\User;
 use Lune\Crypto\Hasher;
 use Lune\Http\Request;
@@ -16,31 +17,9 @@ Route::get('/', function ($request) {
 
 Route::get('/form', fn ($request) => view("form"));
 
-Route::get('/register', fn ($request) => view("auth/register"));
+Route::get('/register', [RegisterController::class, 'create']);
 
-Route::post('/register', function (Request $request) {
-    $data = $request->validate([
-        "email" => ["required", "email"],
-        "name" => "required",
-        "password" => "required",
-        "confirm_password" => "required",
-    ]);
-
-    if ($data["password"] !== $data["confirm_password"]) {
-        return back()->withErrors([
-            "confirm_password" => ["confirm_password" => "Passwords do not match"]
-        ]);
-    }
-
-    $data["password"] = app(Hasher::class)->hash($data["password"]);
-
-    User::create($data);
-    $user = User::firstWhere('email', $data['email']);
-
-    $user->login();
-
-    return redirect('/');
-});
+Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/login', fn ($request) => view('auth/login'));
 
