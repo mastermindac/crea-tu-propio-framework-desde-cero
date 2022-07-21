@@ -51,12 +51,6 @@
               </li>
             <?php else: ?>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/contacts">Contact List</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/contacts/create">Create Contact</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
               </li>
             <?php endif ?>
@@ -66,11 +60,6 @@
     </nav>
 
     <main class="container">
-      <?php if (session()->has('alert')): ?>
-        <div class="alert alert-primary" role="alert">
-          <?= session()->get('alert') ?>
-        </div>
-      <?php endif ?>
       @content
     </main>
   </body>

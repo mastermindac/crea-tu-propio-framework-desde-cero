@@ -7,7 +7,5 @@
         <a href="/register">Register</a>
     </div>
 <?php } else { ?>
-    <div>
-        <a href="/contacts">Contact List</a>
-    </div>
+    You are logged in!
 <?php } ?>
