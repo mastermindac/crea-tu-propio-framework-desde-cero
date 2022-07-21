@@ -51,16 +51,19 @@ class Router {
         $request->setRoute($route);
         $action = $route->action();
 
+        $middlewares = $route->middlewares();
+
         if (is_array($action)) {
             $controller = new $action[0]();
             $action[0] = $controller;
+            $middlewares = array_merge($middlewares, $controller->middlewares());
         }
 
         $params = DependencyInjection::resolveParameters($action, $request->routeParameters());
 
         return $this->runMiddlewares(
             $request,
-            $route->middlewares(),
+            $middlewares,
             fn () => call_user_func($action, ...$params)
         );
     }

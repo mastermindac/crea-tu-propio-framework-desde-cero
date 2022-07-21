@@ -42,6 +42,24 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/home">Home</a>
             </li>
+            <?php if (isGuest()): ?>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/register">Register</a>
+              </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/contacts">Contact List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/contacts/create">Create Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+              </li>
+            <?php endif ?>
           </ul>
         </div>
       </div>

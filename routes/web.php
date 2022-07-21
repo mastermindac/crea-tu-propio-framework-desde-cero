@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\ContactController;
+use App\Controllers\HomeController;
 use App\Models\User;
 use Lune\Auth\Auth;
 use Lune\Http\Response;
@@ -7,14 +9,9 @@ use Lune\Routing\Route;
 
 Auth::routes();
 
-Route::get('/', function () {
-    if (isGuest()) {
-        return Response::text('Guest');
-    }
+Route::get('/', fn () => redirect('/home'));
+Route::get('/home', [HomeController::class, 'show']);
 
-    return Response::text(auth()->name);
-});
-
-Route::get('/form', fn () => view("form"));
-Route::get('/user/{user}', fn (User $user) => json($user->toArray()));
-Route::get('/route/{param}', fn (string $param) => json(["param" => $param]));
+Route::get('/contacts', [ContactController::class, 'index']);
+Route::get('/contacts/create', [ContactController::class, 'create']);
+Route::post('/contacts', [ContactController::class, 'store']);
