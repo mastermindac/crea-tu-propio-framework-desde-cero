@@ -30,4 +30,28 @@ class ContactController extends Controller {
 
         return redirect('/contacts');
     }
+
+    public function edit(Contact $contact) {
+        return view('contacts/edit', ['contact' => $contact]);
+    }
+
+    public function update(Contact $contact, Request $request) {
+        $data = $request->validate([
+            'name' => 'required',
+            'phone_number' => 'required'
+        ]);
+
+        $contact->name = $data['name'];
+        $contact->phone_number = $data['phone_number'];
+        $contact->update();
+
+        return redirect('/contacts');
+    }
+
+    public function destroy(Contact $contact) {
+        $contact->delete();
+        session()->flash('alert', "Contact $contact->name deleted successfuly");
+
+        return redirect('/contacts');
+    }
 }
