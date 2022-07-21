@@ -31,6 +31,26 @@ class PhpNativeServer implements Server {
         return $files;
     }
 
+    protected function requestData(): array {
+        $headers = getallheaders();
+
+        $isJson = isset($headers["Content-Type"])
+            && $headers["Content-Type"] === "application/json";
+
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !$isJson) {
+            return $_POST;
+        }
+
+        if ($isJson) {
+            $data = json_decode(file_get_contents("php://input"), associative: true);
+        } else {
+            parse_str(file_get_contents("php://input"), $data);
+        }
+
+        return $data;
+    }
+
     /**
      * @inheritDoc
      */
@@ -39,7 +59,7 @@ class PhpNativeServer implements Server {
             ->setUri(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH))
             ->setMethod(HttpMethod::from($_SERVER["REQUEST_METHOD"]))
             ->setHeaders(getallheaders())
-            ->setPostData($_POST)
+            ->setPostData($this->requestData())
             ->setQueryParameters($_GET)
             ->setFiles($this->uploadedFiles());
     }
